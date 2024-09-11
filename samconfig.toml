@@ -1,0 +1,11 @@
+version = 0.1
+[connect.deploy.parameters]
+stack_name = "bequick-aws-codepipeline-slack"
+resolve_s3 = true
+s3_prefix = "bequick-aws-codepipeline-slack"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "SlackChannel=\"connect-deploys\" SlackBotName=\"CodePipeline\" SlackBotIcon=\":hellolabs:\""
+image_repositories = []
+profile = "bq-connect"
