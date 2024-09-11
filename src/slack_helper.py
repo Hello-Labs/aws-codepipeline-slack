@@ -7,6 +7,7 @@ from slack_sdk import WebClient
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+#logger.setLevel(logging.DEBUG)
 
 slack_bot_token = os.getenv("SLACK_BOT_TOKEN")
 client = WebClient(token=slack_bot_token)
@@ -20,9 +21,10 @@ CHANNEL_CACHE = {}
 
 def find_channel(name):
     if name in CHANNEL_CACHE:
+        logger.debug(f"returning cached channel name '{name}' id '{CHANNEL_CACHE[name]}'")
         return CHANNEL_CACHE[name]
 
-    r = client.conversations_list(exclude_archived=1)
+    r = client.conversations_list(exclude_archived=1,limit=1000)
     if 'error' in r:
         print("conversations.list")
         logger.error("error: {}".format(r['error']))
@@ -30,7 +32,10 @@ def find_channel(name):
         for ch in r['channels']:
             if ch['name'] == name:
                 CHANNEL_CACHE[name] = ch['id']
+                logger.debug(f"returning channel name '{ch['name']}' id '{ch['id']}'")
                 return ch['id']
+            else:
+                logger.debug(f"not returning channel name '{ch['name']}' id '{ch['id']}'")
 
     return None
 
