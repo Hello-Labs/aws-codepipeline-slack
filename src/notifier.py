@@ -46,9 +46,10 @@ def processCodePipeline(event):
     builder = MessageBuilder(buildInfo, existing_msg)
     builder.updatePipelineEvent(event)
 
-    if builder.needsRevisionInfo():
-        revision = findRevisionInfo(buildInfo)
-        builder.attachRevisionInfo(revision)
+#    this is ugly and does not convey useful information, at least in our use case (bequick connect)
+#    if builder.needsRevisionInfo():
+#        revision = findRevisionInfo(buildInfo)
+#        builder.attachRevisionInfo(revision)
 
     post_build_msg(builder)
 
