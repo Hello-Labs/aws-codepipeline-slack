@@ -65,9 +65,10 @@ def processCodeBuild(event):
     existing_msg = find_message_for_build(buildInfo)
     builder = MessageBuilder(buildInfo, existing_msg)
 
-    if 'phases' in event['detail']['additional-information']:
-        phases = event['detail']['additional-information']['phases']
-        builder.updateBuildStageInfo(stage, phases, actionStates)
+#    this is ugly and does not convey useful information, at least in our use case (bequick connect)
+#    if 'phases' in event['detail']['additional-information']:
+#        phases = event['detail']['additional-information']['phases']
+#        builder.updateBuildStageInfo(stage, phases, actionStates)
 
     logs = event['detail'].get('additional-information', {}).get('logs')
     if logs:
